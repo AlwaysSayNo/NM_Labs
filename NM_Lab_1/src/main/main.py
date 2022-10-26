@@ -3,7 +3,7 @@ import dichotomy_method.dichotomy as dichotomy
 import newton_method.newton as newton
 
 epsilon = 10**-4
-a = 3
+a = 2
 b = 3.5
 x_0 = a
 x_star = b
