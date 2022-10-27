@@ -29,9 +29,9 @@ def check_jacobi_consistency(matrix):
         diag, other = get_check_args(matrix, i)
 
         if is_diagonal_advantage(diag, other):
-            print(get_check_stat_string([diag], other, i, ">"))
+            print(get_check_stat_string([diag], other, i, ">="))
         else:
-            print(get_check_stat_string([diag], other, i, "<="))
+            print(get_check_stat_string([diag], other, i, "<"))
             is_correct = False
             break
 
@@ -58,7 +58,7 @@ def is_diagonal_advantage(diag, other):
     for elem in other:
         rhs += abs(elem)
 
-    return abs(diag) > rhs
+    return abs(diag) >= rhs
 
 
 def get_check_stat_string(lhs_list, rhs_list, i, sign):
