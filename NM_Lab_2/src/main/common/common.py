@@ -1,5 +1,6 @@
 from random import seed
 from random import randint
+import numpy as np
 
 # tridiagonal (n=4, border=10, seed=36. 115, 120)
 # jacobi (n=4, border=10, seed=7. 210, 352)
@@ -95,3 +96,11 @@ def subtract_vectors(lhs, rhs):
 
     return result
 
+
+def conditionality_number(matrix):
+    matrix_inverted = np.linalg.inv(matrix)
+
+    m_norm = matrix_cubic_norm(matrix)
+    m_inverted_norm = matrix_cubic_norm(matrix_inverted)
+
+    return m_norm * m_inverted_norm

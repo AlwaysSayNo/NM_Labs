@@ -75,9 +75,9 @@ def convert_values(values):
 
 
 def find_coefficients(matrix, f_list):
-    a_list = []
-    b_list = []
-    z_list = []
+    a_list = [0]
+    b_list = [0]
+    z_list = [0]
 
     size = len(matrix)
 
@@ -87,16 +87,16 @@ def find_coefficients(matrix, f_list):
 
         if i == 1:
             a_list.append(b_prev / c_prev)
-            b_list.append(f_list[i] / c_prev)
+            b_list.append(f_list[i - 1] / c_prev)
         else:
-            z_prev = z_list[i - 2]
-            beta_prev = b_list[i - 2]
-            f_prev = f_list[i - 2]
+            z_prev = z_list[i - 1]
+            beta_prev = b_list[i - 1]
+            f_prev = f_list[i - 1]
 
             a_list.append(b_prev / z_prev)
-            b_list.append((f_prev + a_prev * beta_prev))
+            b_list.append((f_prev + a_prev * beta_prev) / z_prev)
 
-        z_list.append(c - a_list[i - 1] * a)
+        z_list.append(c - a_list[i] * a)
 
     return a_list, b_list, z_list
 
@@ -107,13 +107,15 @@ def find_result(matrix, values):
 
     y_list = []
     size = len(matrix)
-    i = size - 2
+    i = size - 1
 
-    while i >= -1:
+    a, _, _2 = get_a_b_c(matrix, i)
+
+    while i >= 0:
         y = 0
 
-        if i == size - 2:
-            y = (f_list[i] + a_list[i] * b_list[i]) / z_list[i]
+        if i == size - 1:
+            y = (f_list[i] + a * b_list[i]) / z_list[i]
         else:
             y = a_list[i + 1] * y_list[0] + b_list[i + 1]
 
@@ -130,8 +132,8 @@ def find_determinant(matrix, values):
 
     det = -c
 
-    for z in z_list:
-        det *= -z
+    for i in range(1, len(z_list)):
+        det *= -z_list[i]
 
     return det
 

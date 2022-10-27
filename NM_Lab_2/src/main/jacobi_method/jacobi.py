@@ -89,18 +89,18 @@ def get_x(matrix, values, curr_i, x_list):
 
     for i in range(len(matrix)):
         if i != curr_i:
-            result += other[i] * x_list[i]
+            result += -other[i] * x_list[i]
 
     result /= diag
 
     return result
 
 
-def is_stop_condition(x_list, prev_list, epsilon):
+def is_stop_condition(x_list, prev_list, epsilon, i):
     vector = common.subtract_vectors(x_list, prev_list)
     norm = common.vector_cubic_norm(vector)
 
-    print(f"Stop condition: ||{x_list} - {prev_list}|| = {norm} <= {epsilon} ==> {norm <= epsilon}")
+    print(f"Stop condition: ||x_({i+1}) - x_({i})|| = {norm} <= {epsilon} ==> {norm <= epsilon}")
 
     return norm <= epsilon
 
@@ -116,7 +116,7 @@ def find_result(matrix, values, epsilon):
             x = get_x(matrix, values, j, prev_list)
             x_list.append(x)
 
-        if is_stop_condition(x_list, prev_list, epsilon):
+        if is_stop_condition(x_list, prev_list, epsilon, i):
             break
 
         i += 1
